@@ -2,11 +2,12 @@
 .DS_Store
 
 # Ignore intermediate compilation files 
-.o
+*.o
 
 # Ignore executable and tmp files
 tmp
-
+assembler
+simulator
 
 
 
