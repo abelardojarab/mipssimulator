@@ -1,0 +1,13 @@
+# Can ignore specific files
+.DS_Store
+
+# Ignore intermediate compilation files 
+.o
+
+# Ignore executable and tmp files
+tmp
+
+
+
+
+
