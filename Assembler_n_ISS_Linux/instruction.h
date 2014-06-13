@@ -54,7 +54,7 @@ public:
     literalinstruction="";
   };
 
-  instruction& operator=(const string &b) {
+  instruction& operator= (const string &b) {
     setinstructionb(b);
     setinstructionl("");
     setlabelstring("");
