@@ -43,7 +43,7 @@ int main(int argc, char* argv[])
   p1->StoreDataMemory("Result_mem.txt");
   //p1->ShowPerformance();
 
-  cout<< endl;
+  cout<<endl;
   cout<<"Simulation took " << total << " microseconds."<<endl<<endl;
   delete p1;
   return(0);
