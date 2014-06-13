@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
     cout<<"[data.mem] -> optional file with initial content of the data memory."<<endl<<endl;
     return 1;
   }
-  
+
   string fileinstruction(argv[1]);
   string filedata;
   if (argc == 3) filedata = argv[2];
@@ -32,8 +32,8 @@ int main(int argc, char* argv[])
   if (argc == 3) p1->LoadDataMemory(filedata);
   p1->LoadInstructionMemory(fileinstruction);
   p1->ShowInstructionMemory();
-  
-p1->Simulator();
+
+  p1->Simulator();
 
   gettimeofday(&tv2, NULL);
   double total = ((1000000*tv2.tv_sec + tv2.tv_usec) - (tv1.tv_sec*1000000 + tv1.tv_usec))/1.0;
