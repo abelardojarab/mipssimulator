@@ -9,7 +9,7 @@
 #include <list>
 #include "processor.h"
 #include "instruction.h"
-#define DEBUG 0
+#define DEBUG 1
 
 using std::ifstream;
 using namespace std;
@@ -44,7 +44,6 @@ bool processor::LoadDataMemory(string filenamed)
   return true;
 }
 
-/**************Store data memory****************************/
 bool processor::StoreDataMemory(string filenamed)
 {
   int size=(int)Data_Mem.size();
@@ -146,7 +145,7 @@ bool processor::Simulator()
     }
 
 #if DEBUG
-    cout<<"Got instruction: "<<INSTR.getopcode()<<"\n";
+    cout<<"Got instruction opcode: "<<INSTR.getopcode()<<" and shamt = "<<INSTR.getshamt()<<"\n";
 #endif
     /***********************Here we start the DECODE stage*************************/
     //-----Decoding the instruction
@@ -240,6 +239,14 @@ bool processor::Simulator()
       local_stage_EXE_ALUResult = ID_to_EXE_r1 | ID_to_EXE_immediate;
       break;
 
+    case 14: //xori
+      local_stage_EXE_ALUResult = ID_to_EXE_r1 ^ ID_to_EXE_immediate;
+      break;
+
+    case 15: //muli
+      local_stage_EXE_ALUResult = ID_to_EXE_r1 * ID_to_EXE_immediate;
+      break;
+      
     case 35:  //lw
       local_stage_EXE_ALUResult = ID_to_EXE_r1 + ID_to_EXE_immediate;
       break;
@@ -318,6 +325,10 @@ bool processor::Simulator()
         local_stage_EXE_ALUResult = ID_to_EXE_r1 | ID_to_EXE_r2;
         //put result in r30 during writeback stage
       }
+      if(ID_to_EXE_funct == 38){ //xor
+        local_stage_EXE_ALUResult = ID_to_EXE_r1 ^ ID_to_EXE_r2;
+        //put result in r30 during writeback stage
+      }
       if(ID_to_EXE_funct == 0){ //sll
         local_stage_EXE_ALUResult =  (ID_to_EXE_r1 << ID_to_EXE_shamt);
         //put result in r30 during writeback stage
@@ -382,7 +393,7 @@ bool processor::Simulator()
       }
     else
 #if DEBUG
-      cout<<"Written Nothing to register file"<<endl;
+      cout<<"Written nothing to register file"<<endl;
 #endif
     RegFile[0] = 0; // r0 is always 0;
 #if DEBUG
@@ -604,7 +615,7 @@ bool processor::Simulator()
           PC=immediate;//jump
           BRANCH_TKN = 1;
           break;
-        default:
+       default:
           BRANCH = 0;
 
         }
